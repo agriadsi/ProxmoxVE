@@ -46,6 +46,13 @@ EOF
       fi
     fi
     $STD ln -s /usr/bin/python3.12 $var_python3_link
+    var_pip_link="/usr/bin/pip"
+    if [ -L ${var_pip_link} ] ; then
+      if [ -e ${var_pip_link} ] ; then    
+         $STD unlink $var_pip_link
+      fi
+    fi
+    $STD ln -s /usr/local/bin/pip3 $var_pip_link
     msg_ok "Installed Python 3.12"
   fi
 fi
