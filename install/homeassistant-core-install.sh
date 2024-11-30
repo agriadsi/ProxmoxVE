@@ -20,12 +20,12 @@ if [ "${var_os}" = "debian" ]; then
     msg_info "Installing Python 3.12 Backport Repository on Debian 12"
     $STD wget -qO- https://pascalroeleven.nl/deb-pascalroeleven.gpg | tee /etc/apt/keyrings/deb-pascalroeleven.gpg
     cat <<EOF | tee /etc/apt/sources.list.d/pascalroeleven.sources
-    Types: deb
-    URIs: http://deb.pascalroeleven.nl/python3.12
-    Suites: bookworm-backports
-    Components: main
-    Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
-    EOF
+Types: deb
+URIs: http://deb.pascalroeleven.nl/python3.12
+Suites: bookworm-backports
+Components: main
+Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
+EOF
     $STD apt-get update
     msg_ok "Installed Python 3.12 Backport Repository on Debian 12"
   fi
