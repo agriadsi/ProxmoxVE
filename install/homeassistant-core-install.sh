@@ -40,19 +40,23 @@ EOF
     msg_info "Install and link Python 3.12 on Debian 12"
     $STD apt-get install -y python3.12 python3.12-venv python3.12-dev
     var_python3_link="/usr/bin/python3"
-    if [ -L ${var_python3_link} ] ; then
-      if [ -e ${var_python3_link} ] ; then    
+    if [ -L ${var_python3_link} ]; then
+      if [ -e ${var_python3_link} ]; then    
          $STD unlink $var_python3_link
       fi
     fi
     $STD ln -s /usr/bin/python3.12 $var_python3_link
     var_pip_link="/usr/bin/pip"
-    if [ -L ${var_pip_link} ] ; then
-      if [ -e ${var_pip_link} ] ; then    
+    if [ -L ${var_pip_link} ]; then
+      if [ -e ${var_pip_link} ]; then    
          $STD unlink $var_pip_link
       fi
     fi
     $STD ln -s /usr/local/bin/pip3 $var_pip_link
+    var_externally_managed_file="/usr/lib/python3.12/EXTERNALLY-MANAGED"
+    if [ -f ${var_externally_managed_file} ]; then
+      rm $var_externally_managed_file
+    fi
     msg_ok "Installed Python 3.12"
   fi
 fi
