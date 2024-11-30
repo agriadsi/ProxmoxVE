@@ -17,7 +17,7 @@ update_os
 #  if [ "${var_version}" = "12" ]; then
 msg_info "Installing Python 3.12 Backport Repository on Debian 12"
 wget -qO- https://pascalroeleven.nl/deb-pascalroeleven.gpg | tee /etc/apt/keyrings/deb-pascalroeleven.gpg
-cat <<EOF | sudo tee /etc/apt/sources.list.d/pascalroeleven.sources
+cat <<EOF | tee /etc/apt/sources.list.d/pascalroeleven.sources
 Types: deb
 URIs: http://deb.pascalroeleven.nl/python3.12
 Suites: bookworm-backports
