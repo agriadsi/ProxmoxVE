@@ -14,7 +14,7 @@ network_check
 update_os
 
 msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev
+$STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev pip
 msg_ok "Installed Dependencies"
 
 var_os=$(grep "^ID=" /etc/os-release | cut -d'=' -f2 | tr -d '"')
@@ -33,7 +33,7 @@ EOF
     $STD apt-get update
     msg_ok "Installed Python 3.12 Backport Repository"
     msg_info "Remove Python 3.11 on Debian 12"
-    $STD apt-get remove -y --purge python3.11 python3.11-minimal
+    $STD apt-get remove -y --purge python3.11 python3.11-minimal pip
     $STD apt-get autoremove -y
     $STD apt-get autoclean -y
     msg_ok "Removed Python 3.11"
@@ -49,6 +49,10 @@ EOF
     msg_ok "Installed Python 3.12"
   fi
 fi
+
+msg_info "Installing Python 3.12 Dev"
+$STD apt-get install -y python3.12-dev
+msg_ok "Installed Python 3.12 Dev"
 
 msg_info "Installing UV"
 $STD pip install uv
