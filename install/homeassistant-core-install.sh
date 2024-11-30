@@ -27,16 +27,21 @@ Components: main
 Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
 EOF
     $STD apt-get update
-    msg_ok "Installed Python 3.12 Backport Repository on Debian 12"
-    msg_ok "Remove Python 3.11 on Debian 12"
+    msg_ok "Installed Python 3.12 Backport Repository"
+    msg_info "Remove Python 3.11 on Debian 12"
     $STD apt-get remove -y --purge python3.11 python3.11-minimal
     $STD apt-get autoremove -y
     $STD apt-get autoclean -y
     msg_ok "Removed Python 3.11"
-    msg_ok "Install and link Python 3.12 on Debian 12"
+    msg_info "Install and link Python 3.12 on Debian 12"
     $STD apt-get install -y python3.12 python3.12-venv python3.12-dev
-    $STD unlink /usr/bin/python3
-    $STD ln -s /usr/bin/python3.12 /usr/bin/python3
+    var_python3_link="/usr/bin/python3"
+    if [ -L ${var_python3_link} ] ; then
+      if [ -e ${var_python3_link} ] ; then    
+         $STD unlink $var_python3_link
+      fi
+    fi
+    $STD ln -s /usr/bin/python3.12 $var_python3_link
     msg_ok "Installed Python 3.12"
   fi
 fi
