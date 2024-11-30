@@ -28,11 +28,21 @@ Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
 EOF
     $STD apt-get update
     msg_ok "Installed Python 3.12 Backport Repository on Debian 12"
+    msg_ok "Remove Python 3.11 on Debian 12"
+    $STD apt-get remove -y --purge python3.11 python3.11-minimal
+    $STD apt-get autoremove -y
+    $STD apt-get autoclean -y
+    msg_ok "Removed Python 3.11"
+    msg_ok "Install and link Python 3.12 on Debian 12"
+    $STD apt-get install -y python3.12 python3.12-venv python3.12-dev
+    $STD unlink /usr/bin/python3
+    $STD ln -s /usr/bin/python3.12 /usr/bin/python3
+    msg_ok "Installed Python 3.12"
   fi
 fi
 
 msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev pip python3.12-dev
+$STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev
 msg_ok "Installed Dependencies"
 
 msg_info "Installing UV"
