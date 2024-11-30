@@ -13,21 +13,23 @@ setting_up_container
 network_check
 update_os
 
-#if [ "${var_os}" = "debian" ]; then
-#  if [ "${var_version}" = "12" ]; then
-msg_info "Installing Python 3.12 Backport Repository on Debian 12"
-wget -qO- https://pascalroeleven.nl/deb-pascalroeleven.gpg | tee /etc/apt/keyrings/deb-pascalroeleven.gpg
-cat <<EOF | tee /etc/apt/sources.list.d/pascalroeleven.sources
-Types: deb
-URIs: http://deb.pascalroeleven.nl/python3.12
-Suites: bookworm-backports
-Components: main
-Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
-EOF
-$STD apt-get update
-msg_ok "Installed Python 3.12 Backport Repository on Debian 12"
-#  fi
-#fi
+var_os=$(grep "^ID=" /etc/os-release | cut -d'=' -f2 | tr -d '"')
+var_version=$(grep "^VERSION_ID=" /etc/os-release | cut -d'=' -f2 | tr -d '"')
+if [ "${var_os}" = "debian" ]; then
+  if [ "${var_version}" = "12" ]; then
+    msg_info "Installing Python 3.12 Backport Repository on Debian 12"
+    wget -qO- https://pascalroeleven.nl/deb-pascalroeleven.gpg | tee /etc/apt/keyrings/deb-pascalroeleven.gpg
+    cat <<EOF | tee /etc/apt/sources.list.d/pascalroeleven.sources
+    Types: deb
+    URIs: http://deb.pascalroeleven.nl/python3.12
+    Suites: bookworm-backports
+    Components: main
+    Signed-By: /etc/apt/keyrings/deb-pascalroeleven.gpg
+    EOF
+    $STD apt-get update
+    msg_ok "Installed Python 3.12 Backport Repository on Debian 12"
+  fi
+fi
 
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev pip python3.12-dev
