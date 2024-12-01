@@ -53,10 +53,7 @@ EOF
       fi
     fi
     $STD ln -s /usr/local/bin/pip3 $var_pip_link
-    var_externally_managed_file="/usr/lib/python3.12/EXTERNALLY-MANAGED"
-    if [ -f ${var_externally_managed_file} ]; then
-      rm $var_externally_managed_file
-    fi
+    rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
     msg_ok "Installed Python 3.12"
   fi
 fi
